@@ -1,8 +1,9 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"fmt"
+	"github.com/zeromicro/go-zero/core/logc"
 
 	"BuzzBox/service/user/rpc/internal/config"
 	"BuzzBox/service/user/rpc/internal/server"
@@ -33,7 +34,6 @@ func main() {
 		}
 	})
 	defer s.Stop()
-
-	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
+	logc.Infof(context.Background(), "启动rpc服务器: %s...\n", c.ListenOn)
 	s.Start()
 }

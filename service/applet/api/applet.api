@@ -8,16 +8,16 @@ type Token {
 
 // 注册请求结构体
 type RegisterRequest {
-	Name             string `json:"name"`             // 用户名
-	Mobile           string `json:"mobile"`           // 手机号
-	Password         string `json:"password"`         // 密码
+	Name             string `json:"name"` // 用户名
+	Mobile           string `json:"mobile"` // 手机号
+	Password         string `json:"password"` // 密码
 	VerificationCode string `json:"verification_code"` // 验证码
 }
 
 // 注册响应结构体
 type RegisterResponse {
 	UserId int64 `json:"user_id"` // 用户ID
-	Token  Token `json:"token"`    // 访问令牌
+	Token  Token `json:"token"` // 访问令牌
 }
 
 // 验证请求结构体
@@ -26,25 +26,25 @@ type VerificationRequest {
 }
 
 // 验证响应结构体
-type VerificationResponse  {}
+type VerificationResponse {}
 
 // 登录请求结构体
 type LoginRequest {
-	Mobile           string `json:"mobile"`             // 手机号
+	Mobile           string `json:"mobile"` // 手机号
 	VerificationCode string `json:"verification_code"` // 验证码
 }
 
 // 登录响应结构体
 type LoginResponse {
 	UserId int64 `json:"userId"` // 用户ID
-	Token  Token `json:"token"`  // 访问令牌
+	Token  Token `json:"token"` // 访问令牌
 }
 
 // 用户信息响应结构体
 type UserInfoResponse {
-	UserId   int64  `json:"user_id"`  // 用户ID
+	UserId   int64  `json:"user_id"` // 用户ID
 	Username string `json:"username"` // 用户名
-	Avatar   string `json:"avatar"`   // 头像链接
+	Avatar   string `json:"avatar"` // 头像链接
 }
 
 // 定义服务的路由和处理程序
@@ -68,11 +68,12 @@ service applet-api {
 // 定义用户信息服务的路由和处理程序，并添加 JWT 签名验证
 @server (
 	prefix:    /v1/user // 设置路由前缀
-	signature: true      // 启用签名验证
-	jwt:       Auth      // 使用 JWT 验证
+	signature: true // 启用签名验证
+	jwt:       Auth // 使用 JWT 验证
 )
 service applet-api {
 	// 用户信息请求处理程序
 	@handler UserInfoHandler
 	get /info returns (UserInfoResponse)
 }
+

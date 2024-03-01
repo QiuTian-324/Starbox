@@ -2,40 +2,40 @@
 package types
 
 type LoginRequest struct {
-	Mobile           string `json:"mobile"`
-	VerificationCode string `json:"verification_code"`
+	Mobile           string `json:"mobile"`            // 手机号
+	VerificationCode string `json:"verification_code"` // 验证码
 }
 
 type LoginResponse struct {
-	UserId int64 `json:"userId"`
-	Token  Token `json:"token"`
+	UserId int64 `json:"userId"` // 用户ID
+	Token  Token `json:"token"`  // 访问令牌
 }
 
 type RegisterRequest struct {
-	Name             string `json:"name"`
-	Mobile           string `json:"mobile"`
-	Password         string `json:"password"`
-	VerificationCode string `json:"verification_code"`
+	Name             string `json:"name"`              // 用户名
+	Mobile           string `json:"mobile"`            // 手机号
+	Password         string `json:"password"`          // 密码
+	VerificationCode string `json:"verification_code"` // 验证码
 }
 
 type RegisterResponse struct {
-	UserId int64 `json:"user_id"`
-	Token  Token `json:"token"`
+	UserId int64 `json:"user_id"` // 用户ID
+	Token  Token `json:"token"`   // 访问令牌
 }
 
 type Token struct {
-	AccessToken  string `json:"access_token"`
-	AccessExpire int64  `json:"access_expire"`
+	AccessToken  string `json:"access_token"`  // 访问令牌
+	AccessExpire int64  `json:"access_expire"` // 访问令牌过期时间
 }
 
 type UserInfoResponse struct {
-	UserId   int64  `json:"user_id"`
-	Username string `json:"username"`
-	Avatar   string `json:"avatar"`
+	UserId   int64  `json:"user_id"`  // 用户ID
+	Username string `json:"username"` // 用户名
+	Avatar   string `json:"avatar"`   // 头像链接
 }
 
 type VerificationRequest struct {
-	Mobile string `json:"mobile"`
+	Mobile string `json:"mobile"` // 手机号
 }
 
 type VerificationResponse struct {

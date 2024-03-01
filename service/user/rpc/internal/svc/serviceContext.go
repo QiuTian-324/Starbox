@@ -12,8 +12,9 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
+	cli, _, _ := data.InitClientEnt(c.DB.Name, c.DB.DataSource)
 	return &ServiceContext{
 		Config: c,
-		DB:     data.InitClientEnt(c.DB.Name, c.DB.DataSource),
+		DB:     cli,
 	}
 }

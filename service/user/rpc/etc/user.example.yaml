@@ -4,3 +4,11 @@ Etcd:
   Hosts:
   - 127.0.0.0:2379
   Key: user.rpc
+DB:
+  name: mysql
+  DataSource: root:pass@tcp(127.0.0.0:3306)/buzzbox_user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+Cache:
+  Host: 127.0.0.0
+  Password: ''
+  Port: 6379
+  DB: 0

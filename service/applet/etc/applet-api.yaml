@@ -1,3 +1,25 @@
 Name: applet-api
 Host: 0.0.0.0
 Port: 8888
+sms:
+  AccessKeyId: 'LTAI5t5rnGb9eAXXVDWsJSjR'
+  AccessKeySecret: 'XY10yYM57gLMLYWg7NWOSbKPOZWA2p'
+  SignName: 'AkitaPlanet'
+  TemplateCode: 'SMS_465345782'
+  Endpoint: 'dysmsapi.aliyuncs.com'
+Auth:
+  AccessSecret: buzzBox@akita
+  AccessExpire: 604800
+#  RefreshSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#  RefreshExpire: 2592000
+#  RefreshAfter: 604800
+BizRedis:
+  Host: 8.222.131.221:6380
+  Pass:
+  Type: node
+UserRPC:
+  Etcd:
+    Hosts:
+      - 8.222.131.221:2379
+    Key: user.rpc
+  NonBlock: true

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"BuzzBox/pkg/xcode"
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/rest/httpx"
 
 	"BuzzBox/service/applet/internal/config"
 	"BuzzBox/service/applet/internal/handler"
@@ -25,7 +27,8 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
-
+	// 自定义错误方法
+	httpx.SetErrorHandler(xcode.ErrHandler)
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }

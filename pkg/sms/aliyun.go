@@ -34,7 +34,7 @@ func CreateClient(accessKeyId *string, accessKeySecret *string) (_result *dysmsa
 // SendVerifyCode
 func SendSms(req dysmsapi20170525.SendSmsRequest) (_err error) {
 	// TODO your key，from config
-	client, _err := CreateClient(tea.String("LTAI5t5rnGb9eAXXVDWsJSjR"), tea.String("XY10yYM57gLMLYWg7NWOSbKPOZWA2p"))
+	client, _err := CreateClient(tea.String(""), tea.String(""))
 	if _err != nil {
 		return _err
 	}
@@ -62,8 +62,8 @@ func SendSms(req dysmsapi20170525.SendSmsRequest) (_err error) {
 func getVerifyCodeReq(phoneNumber, code string) (req dysmsapi20170525.SendSmsRequest) {
 	// TODO SignName TemplateCode
 	return dysmsapi20170525.SendSmsRequest{
-		SignName:      tea.String("AkitaPlanet"),
-		TemplateCode:  tea.String("SMS_465345782"),
+		SignName:      tea.String(""),
+		TemplateCode:  tea.String(""),
 		PhoneNumbers:  tea.String(phoneNumber),
 		TemplateParam: tea.String(`{"applet_code":"` + code + `"}`),
 	}

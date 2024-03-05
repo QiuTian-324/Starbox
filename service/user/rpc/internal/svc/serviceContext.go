@@ -1,20 +1,22 @@
 package svc
 
 import (
-	"BuzzBox/service/user/model/data"
-	"BuzzBox/service/user/model/data/ent"
+	"BuzzBox/service/user/model"
 	"BuzzBox/service/user/rpc/internal/config"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type ServiceContext struct {
-	Config config.Config
-	DB     *ent.Client
+	Config    config.Config
+	UserModel model.UserModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	cli, _, _ := data.InitClientEnt(c.DB.Name, c.DB.DataSource)
+
+	conn := sqlx.NewMysql(c.DataSource)
+
 	return &ServiceContext{
-		Config: c,
-		DB:     cli,
+		Config:    c,
+		UserModel: model.NewUserModel(conn, c.CacheRedis),
 	}
 }

@@ -17,15 +17,21 @@ type (
 	FindByIdResponse     = user.FindByIdResponse
 	FindByMobileRequest  = user.FindByMobileRequest
 	FindByMobileResponse = user.FindByMobileResponse
+	LoginRequest         = user.LoginRequest
+	LoginResponse        = user.LoginResponse
 	RegisterRequest      = user.RegisterRequest
 	RegisterResponse     = user.RegisterResponse
 	SendSmsRequest       = user.SendSmsRequest
 	SendSmsResponse      = user.SendSmsResponse
+	UserInfoRequest      = user.UserInfoRequest
+	UserInfoResponse     = user.UserInfoResponse
 
 	User interface {
+		Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 		Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 		FindById(ctx context.Context, in *FindByIdRequest, opts ...grpc.CallOption) (*FindByIdResponse, error)
 		FindByMobile(ctx context.Context, in *FindByMobileRequest, opts ...grpc.CallOption) (*FindByMobileResponse, error)
+		GetUserInfoByID(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 		SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error)
 	}
 
@@ -38,6 +44,11 @@ func NewUser(cli zrpc.Client) User {
 	return &defaultUser{
 		cli: cli,
 	}
+}
+
+func (m *defaultUser) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Login(ctx, in, opts...)
 }
 
 func (m *defaultUser) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
@@ -53,6 +64,11 @@ func (m *defaultUser) FindById(ctx context.Context, in *FindByIdRequest, opts ..
 func (m *defaultUser) FindByMobile(ctx context.Context, in *FindByMobileRequest, opts ...grpc.CallOption) (*FindByMobileResponse, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.FindByMobile(ctx, in, opts...)
+}
+
+func (m *defaultUser) GetUserInfoByID(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.GetUserInfoByID(ctx, in, opts...)
 }
 
 func (m *defaultUser) SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error) {

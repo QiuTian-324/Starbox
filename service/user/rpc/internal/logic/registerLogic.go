@@ -1,12 +1,13 @@
 package logic
 
 import (
-	"context"
-
+	"BuzzBox/service/user/model"
 	"BuzzBox/service/user/rpc/internal/svc"
+	"BuzzBox/service/user/rpc/pkg/user_code"
 	"BuzzBox/service/user/rpc/user"
-
+	"context"
 	"github.com/zeromicro/go-zero/core/logx"
+	"time"
 )
 
 type RegisterLogic struct {
@@ -24,7 +25,24 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 }
 
 func (l *RegisterLogic) Register(in *user.RegisterRequest) (*user.RegisterResponse, error) {
-	// todo: add your logic here and delete this line
 
-	return &user.RegisterResponse{}, nil
+	ret, err := l.svcCtx.UserModel.Insert(l.ctx, &model.User{
+		Username:   in.Username,
+		Password:   in.Password,
+		Mobile:     in.Mobile,
+		Avatar:     in.Avatar,
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
+	})
+	if err != nil {
+		logx.Errorf("Register req: %v error: %v", in, err)
+		return nil, user_code.ErrRegisterFail
+	}
+	userId, err := ret.LastInsertId()
+	if err != nil {
+		logx.Errorf("用户ID插入失败: %v", err)
+		return nil, user_code.ErrUserIDInsertFail
+	}
+
+	return &user.RegisterResponse{Id: userId}, nil
 }

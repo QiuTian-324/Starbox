@@ -4,12 +4,24 @@ package service;
 option go_package="./user";
 
 service User {
+  rpc Login(LoginRequest) returns (LoginResponse);
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc FindById(FindByIdRequest) returns (FindByIdResponse);
   rpc FindByMobile(FindByMobileRequest) returns (FindByMobileResponse);
+  rpc GetUserInfoByID(UserInfoRequest) returns (UserInfoResponse);
   rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
 }
 
+message LoginRequest{
+  string mobile = 1;
+  string password = 3;
+}
+
+message LoginResponse{
+  int64 id = 1;
+  string token = 2;
+  string message = 3;
+}
 
 message RegisterRequest {
   string username = 1;
@@ -20,6 +32,7 @@ message RegisterRequest {
 
 message RegisterResponse {
   int64 id = 1;
+  string message = 3;
 }
 
 message FindByIdRequest {
@@ -31,6 +44,9 @@ message FindByIdResponse {
   string username = 2;
   string mobile = 3;
   string avatar = 4;
+  string create_at = 5;
+  string update_at = 6;
+  string message = 7;
 }
 
 message FindByMobileRequest {
@@ -42,6 +58,9 @@ message FindByMobileResponse {
   string username = 2;
   string mobile = 3;
   string avatar = 4;
+  string create_at = 5;
+  string update_at = 6;
+  string message = 7;
 }
 
 message SendSmsRequest {
@@ -50,5 +69,21 @@ message SendSmsRequest {
 }
 
 message SendSmsResponse {
+  string message = 1;
+}
+
+
+message UserInfoRequest {
+  int64 id = 1;
+}
+
+message UserInfoResponse {
+  int64 id = 1;
+  string username = 2;
+  string mobile = 3;
+  string avatar = 4;
+  string create_at = 5;
+  string update_at = 6;
+  string message = 7;
 }
 

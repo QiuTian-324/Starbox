@@ -19,19 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	User_Register_FullMethodName     = "/service.User/Register"
-	User_FindById_FullMethodName     = "/service.User/FindById"
-	User_FindByMobile_FullMethodName = "/service.User/FindByMobile"
-	User_SendSms_FullMethodName      = "/service.User/SendSms"
+	User_Login_FullMethodName           = "/service.User/Login"
+	User_Register_FullMethodName        = "/service.User/Register"
+	User_FindById_FullMethodName        = "/service.User/FindById"
+	User_FindByMobile_FullMethodName    = "/service.User/FindByMobile"
+	User_GetUserInfoByID_FullMethodName = "/service.User/GetUserInfoByID"
+	User_SendSms_FullMethodName         = "/service.User/SendSms"
 )
 
 // UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	FindById(ctx context.Context, in *FindByIdRequest, opts ...grpc.CallOption) (*FindByIdResponse, error)
 	FindByMobile(ctx context.Context, in *FindByMobileRequest, opts ...grpc.CallOption) (*FindByMobileResponse, error)
+	GetUserInfoByID(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 	SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error)
 }
 
@@ -41,6 +45,15 @@ type userClient struct {
 
 func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 	return &userClient{cc}
+}
+
+func (c *userClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, User_Login_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *userClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
@@ -70,6 +83,15 @@ func (c *userClient) FindByMobile(ctx context.Context, in *FindByMobileRequest, 
 	return out, nil
 }
 
+func (c *userClient) GetUserInfoByID(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
+	out := new(UserInfoResponse)
+	err := c.cc.Invoke(ctx, User_GetUserInfoByID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error) {
 	out := new(SendSmsResponse)
 	err := c.cc.Invoke(ctx, User_SendSms_FullMethodName, in, out, opts...)
@@ -83,9 +105,11 @@ func (c *userClient) SendSms(ctx context.Context, in *SendSmsRequest, opts ...gr
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	FindById(context.Context, *FindByIdRequest) (*FindByIdResponse, error)
 	FindByMobile(context.Context, *FindByMobileRequest) (*FindByMobileResponse, error)
+	GetUserInfoByID(context.Context, *UserInfoRequest) (*UserInfoResponse, error)
 	SendSms(context.Context, *SendSmsRequest) (*SendSmsResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -94,6 +118,9 @@ type UserServer interface {
 type UnimplementedUserServer struct {
 }
 
+func (UnimplementedUserServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
 func (UnimplementedUserServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
@@ -102,6 +129,9 @@ func (UnimplementedUserServer) FindById(context.Context, *FindByIdRequest) (*Fin
 }
 func (UnimplementedUserServer) FindByMobile(context.Context, *FindByMobileRequest) (*FindByMobileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindByMobile not implemented")
+}
+func (UnimplementedUserServer) GetUserInfoByID(context.Context, *UserInfoRequest) (*UserInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfoByID not implemented")
 }
 func (UnimplementedUserServer) SendSms(context.Context, *SendSmsRequest) (*SendSmsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendSms not implemented")
@@ -117,6 +147,24 @@ type UnsafeUserServer interface {
 
 func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
 	s.RegisterService(&User_ServiceDesc, srv)
+}
+
+func _User_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _User_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -173,6 +221,24 @@ func _User_FindByMobile_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserInfoByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserInfoByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserInfoByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserInfoByID(ctx, req.(*UserInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_SendSms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendSmsRequest)
 	if err := dec(in); err != nil {
@@ -199,6 +265,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Login",
+			Handler:    _User_Login_Handler,
+		},
+		{
 			MethodName: "Register",
 			Handler:    _User_Register_Handler,
 		},
@@ -209,6 +279,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindByMobile",
 			Handler:    _User_FindByMobile_Handler,
+		},
+		{
+			MethodName: "GetUserInfoByID",
+			Handler:    _User_GetUserInfoByID_Handler,
 		},
 		{
 			MethodName: "SendSms",

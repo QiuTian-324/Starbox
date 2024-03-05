@@ -1,2 +1,7 @@
 .idea
 service/user/rpc/etc/user.yaml
+service/applet/etc/applet-api.yaml
+service/user/rpc/tmp
+service/applet/tmp
+gen_proto.bat
+gen_model.bat

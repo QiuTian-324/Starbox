@@ -24,7 +24,6 @@ func NewFindByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FindById
 }
 
 func (l *FindByIdLogic) FindById(in *user.FindByIdRequest) (*user.FindByIdResponse, error) {
-	// todo: add your logic here and delete this line
 
 	return &user.FindByIdResponse{}, nil
 }

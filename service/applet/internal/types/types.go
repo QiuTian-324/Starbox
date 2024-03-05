@@ -2,25 +2,26 @@
 package types
 
 type LoginRequest struct {
-	Mobile           string `json:"mobile"`            // 手机号
-	VerificationCode string `json:"verification_code"` // 验证码
+	Mobile   string `json:"mobile"`   // 手机号
+	Password string `json:"password"` // 密码
 }
 
 type LoginResponse struct {
-	UserId int64 `json:"userId"` // 用户ID
-	Token  Token `json:"token"`  // 访问令牌
+	ID      int64  `json:"id"`      // 用户ID
+	Token   Token  `json:"token"`   // 访问令牌
+	Message string `json:"message"` // 登录成功响应消息
 }
 
 type RegisterRequest struct {
-	Name             string `json:"name"`              // 用户名
+	Username         string `json:"username"`          // 用户名
 	Mobile           string `json:"mobile"`            // 手机号
 	Password         string `json:"password"`          // 密码
 	VerificationCode string `json:"verification_code"` // 验证码
 }
 
 type RegisterResponse struct {
-	UserId int64 `json:"user_id"` // 用户ID
-	Token  Token `json:"token"`   // 访问令牌
+	ID      int64  `json:"id"`      // 用户ID
+	Message string `json:"message"` // 注册成功响应消息
 }
 
 type Token struct {
@@ -29,9 +30,12 @@ type Token struct {
 }
 
 type UserInfoResponse struct {
-	UserId   int64  `json:"user_id"`  // 用户ID
-	Username string `json:"username"` // 用户名
-	Avatar   string `json:"avatar"`   // 头像链接
+	ID        int64  `json:"id"`         // 用户ID
+	Username  string `json:"username"`   // 用户名
+	Avatar    string `json:"avatar"`     // 头像链接
+	Mobile    string `json:"mobile"`     // 手机号
+	CreatedAt string `json:"created_at"` // 创建时间
+	UpdatedAt string `json:"updated_at"` // 更新时间
 }
 
 type VerificationRequest struct {
@@ -39,4 +43,5 @@ type VerificationRequest struct {
 }
 
 type VerificationResponse struct {
+	Message string `json:"message"` // 验证结果
 }

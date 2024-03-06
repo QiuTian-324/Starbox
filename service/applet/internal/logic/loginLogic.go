@@ -62,7 +62,7 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 	})
 
 	// 如果手机号未注册，则返回错误
-	if err != nil || u.Id == 0 {
+	if err != nil || u.UserId == 0 {
 		// 手机号未注册
 		return nil, err
 	}
@@ -82,12 +82,12 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 		AccessSecret: l.svcCtx.Config.Auth.AccessSecret,
 		AccessExpire: l.svcCtx.Config.Auth.AccessExpire,
 		Fields: map[string]interface{}{
-			"userId": loginResp.Id,
+			"userId": loginResp.UserId,
 		},
 	})
 
 	return &types.LoginResponse{
-		ID: loginResp.Id,
+		UserID: loginResp.UserId,
 		Token: types.Token{
 			AccessToken:  token.AccessToken,
 			AccessExpire: token.AccessExpire,

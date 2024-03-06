@@ -7,7 +7,7 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	ID      int64  `json:"id"`      // 用户ID
+	UserID  int64  `json:"user_id"` // 用户ID
 	Token   Token  `json:"token"`   // 访问令牌
 	Message string `json:"message"` // 登录成功响应消息
 }
@@ -20,7 +20,7 @@ type RegisterRequest struct {
 }
 
 type RegisterResponse struct {
-	ID      int64  `json:"id"`      // 用户ID
+	UserID  int64  `json:"user_id"` // 用户ID
 	Message string `json:"message"` // 注册成功响应消息
 }
 
@@ -30,7 +30,7 @@ type Token struct {
 }
 
 type UserInfoResponse struct {
-	ID        int64  `json:"id"`         // 用户ID
+	UserID    int64  `json:"user_id"`    // 用户ID
 	Username  string `json:"username"`   // 用户名
 	Avatar    string `json:"avatar"`     // 头像链接
 	Mobile    string `json:"mobile"`     // 手机号

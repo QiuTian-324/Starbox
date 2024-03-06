@@ -85,7 +85,7 @@ func (l *RegisterLogic) Register(req *types.RegisterRequest) (resp *types.Regist
 	})
 
 	// 如果手机号已注册，则返回错误
-	if u != nil && u.Id > 0 {
+	if u != nil && u.UserId > 0 {
 		return nil, applet_code.ErrMobileExist
 	}
 
@@ -110,7 +110,7 @@ func (l *RegisterLogic) Register(req *types.RegisterRequest) (resp *types.Regist
 	// 返回注册成功的响应
 	logx.Infof("注册成功, userId: %d", register)
 	return &types.RegisterResponse{
-		ID:      register.Id,
+		UserID:  register.UserId,
 		Message: applet_resp.RegisterSuccess,
 	}, err
 }

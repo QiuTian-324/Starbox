@@ -33,11 +33,11 @@ func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResponse, err error) {
 	}
 	//通过ID查找用户信息
 	userInfo, err := l.svcCtx.UserRPC.GetUserInfoByID(l.ctx, &user.UserInfoRequest{
-		Id: userID,
+		UserId: userID,
 	})
 
 	return &types.UserInfoResponse{
-		ID:        userID,
+		UserID:    userID,
 		Username:  userInfo.Username,
 		Avatar:    userInfo.Avatar,
 		Mobile:    userInfo.Mobile,

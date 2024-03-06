@@ -18,7 +18,7 @@ message LoginRequest{
 }
 
 message LoginResponse{
-  int64 id = 1;
+  int64 userId = 1;
   string token = 2;
   string message = 3;
 }
@@ -31,16 +31,16 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  int64 id = 1;
+  int64 userId = 1;
   string message = 3;
 }
 
 message FindByIdRequest {
-  int64 id = 1;
+  int64 userId = 1;
 }
 
 message FindByIdResponse {
-  int64 id = 1;
+  int64 userId = 1;
   string username = 2;
   string mobile = 3;
   string avatar = 4;
@@ -54,7 +54,7 @@ message FindByMobileRequest {
 }
 
 message FindByMobileResponse {
-  int64 id = 1;
+  int64 userId = 1;
   string username = 2;
   string mobile = 3;
   string avatar = 4;
@@ -64,7 +64,7 @@ message FindByMobileResponse {
 }
 
 message SendSmsRequest {
-  int64 id = 1;
+  int64 userId = 1;
   string mobile = 2;
 }
 
@@ -74,11 +74,11 @@ message SendSmsResponse {
 
 
 message UserInfoRequest {
-  int64 id = 1;
+  int64 userId = 1;
 }
 
 message UserInfoResponse {
-  int64 id = 1;
+  int64 userId = 1;
   string username = 2;
   string mobile = 3;
   string avatar = 4;

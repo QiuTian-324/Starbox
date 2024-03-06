@@ -25,7 +25,7 @@ func NewGetUserInfoByIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 }
 
 func (l *GetUserInfoByIDLogic) GetUserInfoByID(in *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	u, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	u, err := l.svcCtx.UserModel.FindOne(l.ctx, in.UserId)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (l *GetUserInfoByIDLogic) GetUserInfoByID(in *user.UserInfoRequest) (*user.
 	mobile, _ := encrypt.DecMobile(u.Mobile)
 
 	return &user.UserInfoResponse{
-		Id:       u.Id,
+		UserId:   u.Id,
 		Username: u.Username,
 		Avatar:   u.Avatar,
 		Mobile:   mobile,

@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"BuzzBox/service/user/model"
 	"BuzzBox/service/user/rpc/internal/config"
+	"BuzzBox/service/user/rpc/model"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -13,10 +13,8 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 
-	conn := sqlx.NewMysql(c.DataSource)
-
 	return &ServiceContext{
 		Config:    c,
-		UserModel: model.NewUserModel(conn, c.CacheRedis),
+		UserModel: model.NewUserModel(sqlx.NewMysql(c.DataSource), c.CacheRedis),
 	}
 }

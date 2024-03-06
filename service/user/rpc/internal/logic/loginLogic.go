@@ -2,7 +2,7 @@ package logic
 
 import (
 	"BuzzBox/service/user/rpc/internal/svc"
-	"BuzzBox/service/user/rpc/pkg/user_code"
+	"BuzzBox/service/user/rpc/pkg/user_rpc_code"
 	"BuzzBox/service/user/rpc/user"
 	"context"
 
@@ -30,9 +30,9 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 		return nil, err
 	}
 	if userInfo.Password != in.Password {
-		return nil, user_code.ErrPassword
+		return nil, user_rpc_code.ErrPassword
 	}
 	return &user.LoginResponse{
-		Id: userInfo.Id,
+		UserId: userInfo.Id,
 	}, nil
 }

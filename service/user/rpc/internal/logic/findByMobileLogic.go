@@ -2,7 +2,7 @@ package logic
 
 import (
 	"BuzzBox/pkg/encrypt"
-	"BuzzBox/service/user/rpc/pkg/user_code"
+	"BuzzBox/service/user/rpc/pkg/user_rpc_code"
 	"context"
 
 	"BuzzBox/service/user/rpc/internal/svc"
@@ -29,14 +29,14 @@ func NewFindByMobileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Find
 func (l *FindByMobileLogic) FindByMobile(in *user.FindByMobileRequest) (*user.FindByMobileResponse, error) {
 	u, err := l.svcCtx.UserModel.FindOneByMobile(l.ctx, in.Mobile)
 	if err != nil {
-		return nil, user_code.ErrMobileNotExist
+		return nil, user_rpc_code.ErrMobileNotExist
 	}
 	if u.Mobile != in.Mobile {
-		return nil, user_code.ErrNotRegister
+		return nil, user_rpc_code.ErrNotRegister
 	}
 
 	return &user.FindByMobileResponse{
-		Id:       u.Id,
+		UserId:   u.Id,
 		Username: u.Username,
 		Avatar:   u.Avatar,
 		Mobile:   u.Mobile,

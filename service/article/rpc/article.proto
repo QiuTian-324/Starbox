@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package pb;
+option go_package="./pb";
+
+service Article {
+  rpc PublishArticle(PublishArticleRequest) returns (PublishArticleResponse);
+  rpc GetArticleList(GetArticleListRequest) returns (GetArticleListResponse);
+  rpc ArticleDelete(ArticleDeleteRequest) returns (ArticleDeleteResponse);
+  rpc ArticleDetail(ArticleDetailRequest) returns (ArticleDetailResponse);
+}
+message ArticleInfo {
+  int64 Id = 1;               // 文章 ID
+  string title = 2;           // 标题
+  string content = 3;         // 内容
+  string description = 4;     // 描述
+  string cover = 5;           // 封面图片
+  int64 commentCount = 6;     // 评论数量
+  int64 likeCount = 7;        // 点赞数量
+  int64 publishTime = 8;      // 发布时间
+  int64 authorId = 9;         // 作者 ID
+}
+
+// 发布文章
+message PublishArticleRequest {
+  int64 userId = 1;          // 用户 ID
+  string title = 2;          // 标题
+  string content = 3;        // 内容
+  string description = 4;    // 描述
+  string cover = 5;          // 封面图片
+}
+// 发布文章响应
+message PublishArticleResponse {
+  int64 articleId = 1;       // 文章 ID
+}
+
+// 获取文章列表
+message GetArticleListRequest {
+  int64 userId = 1;          // 用户 ID
+  int64 cursor = 2;          // 游标
+  int64 pageSize = 3;        // 页面大小
+  int32 sortType = 4;        // 排序类型
+  int64 articleId = 5;       // 文章 ID
+}
+
+// 获取文章列表响应
+message GetArticleListResponse {
+  repeated ArticleInfo articles = 1;   // 文章信息列表
+  bool isEnd = 2;                      // 是否结束
+  int64 cursor = 3;                    // 游标
+  int64 articleId = 4;                 // 文章 ID
+}
+
+// 删除文章请求
+message ArticleDeleteRequest {
+  int64 userId = 1;          // 用户 ID
+  int64 articleId = 2;       // 文章 ID
+}
+
+// 删除文章响应
+message ArticleDeleteResponse {
+  string message = 1;        // 消息
+}
+
+// 文章详情请求
+message ArticleDetailRequest {
+  int64 articleId = 1;       // 文章 ID
+}
+
+// 文章详情响应
+message ArticleDetailResponse {
+  ArticleInfo article = 1;   // 文章信息
+}

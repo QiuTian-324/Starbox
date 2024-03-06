@@ -1,5 +1,5 @@
-create database beyond_article;
-use beyond_article;
+create database buzzbox_article;
+use buzzbox_article;
 
 CREATE TABLE `article` (
     `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -22,10 +22,6 @@ CREATE TABLE `article` (
     KEY `ix_author_id` (`author_id`),
     KEY `ix_update_time` (`update_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='文章表';
-
-
-insert into article(title, content, author_id, like_num, publish_time) values ('文章标题1', '文章内容1', 1, 1, '2023-11-25 17:01:01');
-insert into article(title, content, author_id, like_num, publish_time) values ('文章标题2', '文章内容2', 1, 10, '2023-11-25 15:01:01');
 
 
 

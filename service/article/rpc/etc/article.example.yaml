@@ -1,0 +1,15 @@
+Name: article.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+    - localhost:2379
+  Key: article.rpc
+CacheRedis:
+  - Host: localhost:6379
+    Pass:
+    Type: node
+DataSource: root:pass@tcp(localhost:3306)/table?charset=utf8mb4&parseTime=true
+BizRedis:
+  Host: localhost:2379
+  Pass:
+  Type: node

@@ -1,0 +1,28 @@
+Name: article-api
+Host: 0.0.0.0
+Port: 8889
+MaxBytes: 20485760 # 20MB
+Auth:
+  AccessSecret: buzzBox@akita
+  AccessExpire: 604800
+Oss:
+  Endpoint: ''
+  AccessKeyId: ''
+  AccessKeySecret: ''
+  BucketName: ''
+ArticleRPC:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: article.rpc
+  NonBlock: true
+UserRPC:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: user.rpc
+  NonBlock: true
+#Prometheus:
+#  Host: 0.0.0.0
+#  Port: 9101
+#  Path: /metrics
